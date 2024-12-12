@@ -224,9 +224,14 @@ gen_env_bin()
 		default_env_file=${env_dir}/k230_canmv.env;
 	fi
 
-	if [ ${CONF} == "k230d_canmv_ilp32_defconfig" ] || [ ${CONF} == "BPI-CanMV-K230D-Zero_ilp32_defconfig" ]; then
+	if [ ${CONF} == "k230d_canmv_atk_dnk230d_defconfig" ] || [ ${CONF} == "k230d_canmv_atk_dnk230d_ilp32_defconfig" ]; then
+		sed -i '/^bnuttx=/s/mmc 1/mmc 0/g' ${default_env_file}
+		sed -i '/^blinux=/s/mmc 1/mmc 0/g' ${default_env_file}
+	fi
+
+	if [ ${CONF} == "k230d_canmv_ilp32_defconfig" ] || [ ${CONF} == "BPI-CanMV-K230D-Zero_ilp32_defconfig" ] || [ ${CONF} == "k230d_canmv_atk_dnk230d_ilp32_defconfig" ]; then
 		sed -i 's/^bootcmd=.*$/bootcmd=run bnuttx;run blinuxilp32;/g' ${default_env_file}
-	elif [ ${CONF} == "k230d_canmv_defconfig" ] || [ ${CONF} == "BPI-CanMV-K230D-Zero_defconfig" ]; then
+	elif [ ${CONF} == "k230d_canmv_defconfig" ] || [ ${CONF} == "BPI-CanMV-K230D-Zero_defconfig" ] || [ ${CONF} == "k230d_canmv_atk_dnk230d_defconfig" ]; then
 		sed -i 's/^bootcmd=.*$/bootcmd=run bnuttx;run blinux;/g' ${default_env_file}
 	else
 		sed -i 's/^bootcmd=.*$/bootcmd=run blinux;/g' ${default_env_file}
